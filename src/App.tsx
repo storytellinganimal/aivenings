@@ -207,6 +207,12 @@ export default function App() {
           <section className="group">
             <div className="group-head">
               <h2>Pixelate</h2>
+              <button
+                className="btn-text"
+                onClick={() => set({ pixel: Math.floor(1 + Math.random() * 39) })}
+              >
+                shuffle
+              </button>
             </div>
             <Slider
               label="Block size"
