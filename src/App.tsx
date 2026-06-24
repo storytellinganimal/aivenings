@@ -154,7 +154,7 @@ export default function App() {
           <div className="group-head">
             <h2>Bubbles</h2>
             <button
-              className="ghost"
+              className="btn-text"
               onClick={() =>
                 set({ bubbleSeed: Math.floor(Math.random() * 1e9) })
               }
@@ -207,10 +207,10 @@ export default function App() {
         </section>
 
         <div className="actions">
-          <button className="reset" onClick={() => setS(DEFAULTS)}>
+          <button className="btn-tonal" onClick={() => setS(DEFAULTS)}>
             Reset
           </button>
-          <button className="primary" onClick={() => exportRef.current?.()}>
+          <button className="btn-filled" onClick={() => exportRef.current?.()}>
             Export PNG
           </button>
         </div>

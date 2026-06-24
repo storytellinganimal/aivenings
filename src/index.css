@@ -16,14 +16,73 @@
 }
 
 :root {
-  --bg: #0a0a0b;
-  --panel: #111113;
-  --panel-2: #161619;
-  --line: #232327;
-  --text: #ededef;
-  --text-dim: #8a8a92;
-  --text-faint: #5a5a62;
-  --accent: #ff00dd;
+  /* ── M3 Dark Color Scheme — AIvenings ──────────────────────── */
+  --md-sys-color-primary:             #ff00dd;
+  --md-sys-color-on-primary:          #000000;
+  --md-sys-color-primary-container:   #56004b;
+  --md-sys-color-on-primary-container:#ffd7f5;
+
+  --md-sys-color-surface:                   #0a0a0b;
+  --md-sys-color-surface-container-lowest:  #050506;
+  --md-sys-color-surface-container-low:     #0e0e10;
+  --md-sys-color-surface-container:         #111113;
+  --md-sys-color-surface-container-high:    #161619;
+  --md-sys-color-surface-container-highest: #1e1e22;
+
+  --md-sys-color-on-surface:         #ededef;
+  --md-sys-color-on-surface-variant: #8a8a92;
+
+  --md-sys-color-outline:         #232327;
+  --md-sys-color-outline-variant: #3a3a40;
+
+  /* ── M3 Shape Tokens ───────────────────────────────────────── */
+  --md-sys-shape-corner-extra-small: 4px;
+  --md-sys-shape-corner-small:       8px;
+  --md-sys-shape-corner-medium:      12px;
+  --md-sys-shape-corner-large:       16px;
+  --md-sys-shape-corner-extra-large: 28px;
+  --md-sys-shape-corner-full:        9999px;
+
+  /* ── M3 Type Scale ─────────────────────────────────────────── */
+  /* Title Large  — panel name */
+  --md-sys-type-title-large-size:    22px;
+  --md-sys-type-title-large-weight:  400;
+  --md-sys-type-title-large-lh:      28px;
+  --md-sys-type-title-large-ls:      0em;
+
+  /* Title Small  — section headings */
+  --md-sys-type-title-small-size:    14px;
+  --md-sys-type-title-small-weight:  500;
+  --md-sys-type-title-small-lh:      20px;
+  --md-sys-type-title-small-ls:      0.006em;
+
+  /* Label Large  — button labels, slider labels */
+  --md-sys-type-label-large-size:    14px;
+  --md-sys-type-label-large-weight:  500;
+  --md-sys-type-label-large-lh:      20px;
+  --md-sys-type-label-large-ls:      0.006em;
+
+  /* Label Medium — sub-labels, swatches */
+  --md-sys-type-label-medium-size:   12px;
+  --md-sys-type-label-medium-weight: 500;
+  --md-sys-type-label-medium-lh:     16px;
+  --md-sys-type-label-medium-ls:     0.031em;
+
+  /* Body Small   — hint / helper text */
+  --md-sys-type-body-small-size:     12px;
+  --md-sys-type-body-small-weight:   400;
+  --md-sys-type-body-small-lh:       16px;
+  --md-sys-type-body-small-ls:       0.025em;
+
+  /* ── Legacy aliases (Poster.tsx uses these) ────────────────── */
+  --bg:        var(--md-sys-color-surface);
+  --panel:     var(--md-sys-color-surface-container);
+  --panel-2:   var(--md-sys-color-surface-container-high);
+  --line:      var(--md-sys-color-outline);
+  --text:      var(--md-sys-color-on-surface);
+  --text-dim:  var(--md-sys-color-on-surface-variant);
+  --text-faint:#5a5a62;
+  --accent:    var(--md-sys-color-primary);
 
   color-scheme: dark;
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -31,7 +90,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -44,7 +105,7 @@ body,
 }
 
 body {
-  background: var(--bg);
-  color: var(--text);
+  background: var(--md-sys-color-surface);
+  color: var(--md-sys-color-on-surface);
   overflow: hidden;
 }
