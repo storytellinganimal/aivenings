@@ -220,6 +220,24 @@ export default function App() {
               Affects gradient &amp; bubbles — text stays sharp.
             </p>
           </section>
+
+          <div className="credits">
+            <p className="credits-cta">Want to join an Aivening?</p>
+            <p className="credits-contact">
+              Drop me a line: lina(at)linamoreno.com
+            </p>
+            <p className="credits-attr">
+              Designed by{" "}
+              <a
+                href="https://linamoreno.com/home"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Lina Moreno
+              </a>
+              {" "}· Developed with Claude
+            </p>
+          </div>
         </div>
 
         <footer className="actions">

@@ -356,6 +356,60 @@ input[type="range"]:active::-moz-range-thumb {
 .btn-filled:hover::before  { opacity: 0.08; }
 .btn-filled:active::before { opacity: 0.12; }
 
+/* ── Credits ───────────────────────────────────────────────────── */
+
+.credits {
+  margin-top: auto;
+  padding-top: 20px;
+  padding-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-top: 1px solid var(--md-sys-color-outline);
+}
+
+.credits-cta {
+  font-size: var(--md-sys-type-label-medium-size);
+  font-weight: var(--md-sys-type-label-medium-weight);
+  letter-spacing: var(--md-sys-type-label-medium-ls);
+  line-height: var(--md-sys-type-label-medium-lh);
+  color: var(--md-sys-color-on-surface);
+}
+
+.credits-contact {
+  font-size: var(--md-sys-type-body-small-size);
+  font-weight: var(--md-sys-type-body-small-weight);
+  letter-spacing: var(--md-sys-type-body-small-ls);
+  line-height: var(--md-sys-type-body-small-lh);
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.credits-attr {
+  font-size: var(--md-sys-type-body-small-size);
+  font-weight: var(--md-sys-type-body-small-weight);
+  letter-spacing: var(--md-sys-type-body-small-ls);
+  line-height: var(--md-sys-type-body-small-lh);
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.credits-attr a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: rgba(255, 255, 255, 0.3);
+  transition: text-decoration-color 150ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.credits-attr a:hover {
+  text-decoration-color: var(--md-sys-color-on-surface-variant);
+}
+
+.credits-attr a:focus-visible {
+  outline: 2px solid var(--md-sys-color-on-surface);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
 /* ── Actions footer — pinned below the scroll area ────────────── */
 
 .actions {
