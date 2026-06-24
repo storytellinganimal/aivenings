@@ -84,8 +84,8 @@ function drawBubbles(
     const cx = b.x / s.pixel;
     const cy = b.y / s.pixel;
     const g = ctx.createLinearGradient(cx, cy - r, cx, cy + r);
-    g.addColorStop(0, top);
-    g.addColorStop(1, accent);
+    g.addColorStop(0, accent);
+    g.addColorStop(1, top);
     ctx.fillStyle = g;
     ctx.beginPath();
     ctx.ellipse(cx, cy, r, r, 0, 0, Math.PI * 2);
