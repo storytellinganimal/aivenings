@@ -170,13 +170,15 @@ export default function App() {
               <h2>Bubbles</h2>
               <button
                 className="btn-text"
-                onClick={() =>
+                onClick={() => {
+                  const size = Math.floor(80 + Math.random() * 420);
+                  const maxCount = size < 200 ? MAX_BUBBLES : 10;
                   set({
                     bubbleSeed: Math.floor(Math.random() * 1e9),
-                    bubbleCount: Math.floor(1 + Math.random() * MAX_BUBBLES),
-                    bubbleSize: Math.floor(80 + Math.random() * 620),
-                  })
-                }
+                    bubbleCount: Math.floor(1 + Math.random() * maxCount),
+                    bubbleSize: size,
+                  });
+                }}
               >
                 shuffle
               </button>
