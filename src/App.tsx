@@ -131,7 +131,7 @@ export default function App() {
       <aside className="panel">
         <div className="panel-scroll">
           <header className="panel-head">
-            <h1>AIvenings</h1>
+            <h1>Aivenings</h1>
             <p>poster editor</p>
           </header>
 
