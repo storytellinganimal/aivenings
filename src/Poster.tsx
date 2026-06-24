@@ -359,7 +359,6 @@ export default function Poster({
   // Compose all three layers into a single PNG and download it.
   useEffect(() => {
     exportRef.current = async () => {
-      const s = settingsRef.current;
       await document.fonts.ready;
       const out = document.createElement("canvas");
       out.width = POSTER_W;
