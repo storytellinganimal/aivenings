@@ -346,13 +346,76 @@ export default function Poster({
       canvas.style.cursor = "default";
     };
 
+    const onTouchStart = (e: TouchEvent) => {
+      const touch = e.touches[0];
+      const { x, y } = clientToPoster(canvas, touch.clientX, touch.clientY);
+      const r = settingsRef.current.bubbleSize / 2;
+      const bodies = bodiesRef.current;
+      for (let i = 0; i < bodies.length; i++) {
+        if (Math.hypot(bodies[i].x - x, bodies[i].y - y) <= r) {
+          dragIdxRef.current = i;
+          dragVelRef.current = { vx: 0, vy: 0 };
+          dragLastRef.current = { x, y, t: performance.now() };
+          e.preventDefault();
+          break;
+        }
+      }
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      if (dragIdxRef.current === -1) return;
+      e.preventDefault();
+      const touch = e.touches[0];
+      const { x, y } = clientToPoster(canvas, touch.clientX, touch.clientY);
+      const now = performance.now();
+      const dt = (now - dragLastRef.current.t) / 1000;
+      if (dt > 0) {
+        dragVelRef.current = {
+          vx: (x - dragLastRef.current.x) / dt,
+          vy: (y - dragLastRef.current.y) / dt,
+        };
+      }
+      dragLastRef.current = { x, y, t: now };
+      const body = bodiesRef.current[dragIdxRef.current];
+      if (body) {
+        const r = settingsRef.current.bubbleSize / 2;
+        body.x = Math.max(r, Math.min(POSTER_W - r, x));
+        body.y = Math.max(r, Math.min(POSTER_H - r, y));
+      }
+    };
+
+    const onTouchEnd = () => {
+      if (dragIdxRef.current === -1) return;
+      const body = bodiesRef.current[dragIdxRef.current];
+      if (body) {
+        const { vx, vy } = dragVelRef.current;
+        const speed = settingsRef.current.bubbleSpeed;
+        const mag = Math.hypot(vx, vy);
+        if (mag > 0) {
+          body.vx = (vx / mag) * speed;
+          body.vy = (vy / mag) * speed;
+        } else {
+          const angle = Math.random() * Math.PI * 2;
+          body.vx = Math.cos(angle) * speed;
+          body.vy = Math.sin(angle) * speed;
+        }
+      }
+      dragIdxRef.current = -1;
+    };
+
     canvas.addEventListener("mousedown", onMouseDown);
     document.addEventListener("mousemove", onMouseMove);
     document.addEventListener("mouseup", onMouseUp);
+    canvas.addEventListener("touchstart", onTouchStart, { passive: false });
+    document.addEventListener("touchmove", onTouchMove, { passive: false });
+    document.addEventListener("touchend", onTouchEnd);
     return () => {
       canvas.removeEventListener("mousedown", onMouseDown);
       document.removeEventListener("mousemove", onMouseMove);
       document.removeEventListener("mouseup", onMouseUp);
+      canvas.removeEventListener("touchstart", onTouchStart);
+      document.removeEventListener("touchmove", onTouchMove);
+      document.removeEventListener("touchend", onTouchEnd);
     };
   }, []);
 

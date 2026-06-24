@@ -171,7 +171,11 @@ export default function App() {
               <button
                 className="btn-text"
                 onClick={() =>
-                  set({ bubbleSeed: Math.floor(Math.random() * 1e9) })
+                  set({
+                    bubbleSeed: Math.floor(Math.random() * 1e9),
+                    bubbleCount: Math.floor(1 + Math.random() * MAX_BUBBLES),
+                    bubbleSize: Math.floor(80 + Math.random() * 620),
+                  })
                 }
               >
                 shuffle

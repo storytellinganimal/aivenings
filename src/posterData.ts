@@ -43,7 +43,7 @@ export const fontFamilyFor = (variant: Word["variant"]) =>
     ? '"Terminal Grotesque Open", "Terminal Grotesque", monospace'
     : '"Terminal Grotesque", monospace';
 
-export const MAX_BUBBLES = 24;
+export const MAX_BUBBLES = 30;
 
 // Deterministic PRNG so a given seed always yields the same starting layout.
 export function mulberry32(seed: number) {
