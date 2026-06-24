@@ -22,8 +22,8 @@ const w = (
 ): Word => ({ text, left, top, variant });
 
 export const WORDS: Word[] = [
-  w("///////", 0, -42),
-  w("Aivenings", 579, -32),
+  w("///////", -103, -42),
+  w("Aivenings", 473, -32),
   w("Aivenings", -148, 197),
   w("Aivenings", -247, 309),
   w("18:30", 716, 570, "open"),
