@@ -1,0 +1,50 @@
+@font-face {
+  font-family: "Terminal Grotesque";
+  src: url("/fonts/terminal-grotesque.woff2") format("woff2"),
+    url("/fonts/terminal-grotesque.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "Terminal Grotesque Open";
+  src: url("/fonts/terminal-grotesque-open.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+:root {
+  --bg: #0a0a0b;
+  --panel: #111113;
+  --panel-2: #161619;
+  --line: #232327;
+  --text: #ededef;
+  --text-dim: #8a8a92;
+  --text-faint: #5a5a62;
+  --accent: #ff00dd;
+
+  color-scheme: dark;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+}
