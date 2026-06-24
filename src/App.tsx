@@ -139,16 +139,15 @@ export default function App() {
             <h2>Colour</h2>
           </div>
           <ColorStop
-            name="Top"
+            name="Color 1"
             value={{ h: s.topHue, s: s.topSat, l: s.topLight }}
             onChange={(v) => set({ topHue: v.h, topSat: v.s, topLight: v.l })}
           />
           <ColorStop
-            name="Bottom"
+            name="Color 2"
             value={{ h: s.botHue, s: s.botSat, l: s.botLight }}
             onChange={(v) => set({ botHue: v.h, botSat: v.s, botLight: v.l })}
           />
-          <p className="hint">Bubbles follow the bottom colour.</p>
         </section>
 
         <section className="group">

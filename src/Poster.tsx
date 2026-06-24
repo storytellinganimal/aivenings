@@ -78,14 +78,14 @@ function drawBubbles(
   const ctx = canvas.getContext("2d")!;
   ctx.imageSmoothingEnabled = false;
   ctx.clearRect(0, 0, w, h);
-  const { accent } = palette(s);
+  const { top, accent } = palette(s);
   const r = s.bubbleSize / 2 / s.pixel;
   for (const b of bodies) {
     const cx = b.x / s.pixel;
     const cy = b.y / s.pixel;
     const g = ctx.createLinearGradient(cx, cy - r, cx, cy + r);
-    g.addColorStop(0, accent);
-    g.addColorStop(1, "#ffffff");
+    g.addColorStop(0, top);
+    g.addColorStop(1, accent);
     ctx.fillStyle = g;
     ctx.beginPath();
     ctx.ellipse(cx, cy, r, r, 0, 0, Math.PI * 2);
