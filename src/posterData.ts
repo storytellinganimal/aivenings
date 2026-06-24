@@ -21,20 +21,20 @@ const w = (
 ): Word => ({ text, left, top, variant });
 
 export const WORDS: Word[] = [
+  w("///////", 0, -42),
+  w("Aivenings", 579, -32),
   w("Aivenings", -148, 197),
-  w("Aivenings", -251, 431.6),
-  w("Aivenings", 392, 681, "open"),
+  w("Aivenings", -242, 431.6),
+  w("Aivenings", 383, 683, "open"),
   w("Aivenings", 126, 764.66),
-  w("Aivenings", 471, 873),
-  w("Hamburg", 196, 1124, "open"),
+  w("Aivenings", 471, 878),
+  w("Hamburg", 196, 1115, "open"),
   w("07.07.2026", -33, 1204),
-  w("Aivenings", 924, 342),
-  w("Aivenings", 924, 1126),
-  w("Aivenings", 924, 1204),
-  w("Aivenings", 579, -41),
-  w("///////", 579, 197),
-  w("///////", -393, 1090),
-  w("///////", 0, -52),
+  w("Aivenings", 928, 329),
+  w("Aivenings", 928, 1084),
+  w("Aivenings", 928, 1206),
+  w("///////", 578, 201),
+  w("///////", -406, 1075),
 ];
 
 export const FONT_SIZE = 180;
