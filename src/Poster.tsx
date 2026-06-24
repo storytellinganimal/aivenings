@@ -25,6 +25,14 @@ export type PosterSettings = {
 
 type Body = { x: number; y: number; vx: number; vy: number };
 
+function clientToPoster(canvas: HTMLCanvasElement, clientX: number, clientY: number) {
+  const rect = canvas.getBoundingClientRect();
+  return {
+    x: (clientX - rect.left) * POSTER_W / rect.width,
+    y: (clientY - rect.top) * POSTER_H / rect.height,
+  };
+}
+
 // The gradient runs from the top stop to the bottom stop; the bubbles share
 // the bottom (accent) colour.
 function palette(s: PosterSettings) {
@@ -87,8 +95,11 @@ function drawBubbles(
 
 // Advance the bubble simulation by dt seconds: move, bounce off walls, and
 // resolve equal-mass elastic collisions between bubbles.
-function step(bodies: Body[], dt: number, radius: number) {
-  for (const b of bodies) {
+// pinnedIdx: index of a bubble held by the user (treated as infinite mass).
+function step(bodies: Body[], dt: number, radius: number, pinnedIdx = -1) {
+  for (let i = 0; i < bodies.length; i++) {
+    if (i === pinnedIdx) continue;
+    const b = bodies[i];
     b.x += b.vx * dt;
     b.y += b.vy * dt;
     if (b.x < radius) {
@@ -117,17 +128,35 @@ function step(bodies: Body[], dt: number, radius: number) {
       if (dist < min) {
         const nx = dx / dist;
         const ny = dy / dist;
-        const overlap = (min - dist) / 2;
-        a.x -= nx * overlap;
-        a.y -= ny * overlap;
-        b.x += nx * overlap;
-        b.y += ny * overlap;
-        const rel = (b.vx - a.vx) * nx + (b.vy - a.vy) * ny;
-        if (rel < 0) {
-          a.vx += rel * nx;
-          a.vy += rel * ny;
-          b.vx -= rel * nx;
-          b.vy -= rel * ny;
+        const overlap = min - dist;
+        const aPin = i === pinnedIdx;
+        const bPin = j === pinnedIdx;
+        if (aPin) {
+          // a is held: push b the full overlap, reflect b off a (infinite mass wall)
+          b.x += nx * overlap;
+          b.y += ny * overlap;
+          const rel = b.vx * nx + b.vy * ny;
+          if (rel < 0) { b.vx -= 2 * rel * nx; b.vy -= 2 * rel * ny; }
+        } else if (bPin) {
+          // b is held: push a the full overlap, reflect a off b
+          a.x -= nx * overlap;
+          a.y -= ny * overlap;
+          const aRel = a.vx * nx + a.vy * ny;
+          if (aRel > 0) { a.vx -= 2 * aRel * nx; a.vy -= 2 * aRel * ny; }
+        } else {
+          // equal-mass elastic collision
+          const half = overlap / 2;
+          a.x -= nx * half;
+          a.y -= ny * half;
+          b.x += nx * half;
+          b.y += ny * half;
+          const rel = (b.vx - a.vx) * nx + (b.vy - a.vy) * ny;
+          if (rel < 0) {
+            a.vx += rel * nx;
+            a.vy += rel * ny;
+            b.vx -= rel * nx;
+            b.vy -= rel * ny;
+          }
         }
       }
     }
@@ -148,6 +177,9 @@ export default function Poster({
   const settingsRef = useRef(settings);
   settingsRef.current = settings;
   const [scale, setScale] = useState(1);
+  const dragIdxRef = useRef(-1);
+  const dragVelRef = useRef({ vx: 0, vy: 0 });
+  const dragLastRef = useRef({ x: 0, y: 0, t: 0 });
 
   // Fit the fixed-size poster into the available stage area.
   useLayoutEffect(() => {
@@ -237,12 +269,91 @@ export default function Poster({
       const dt = Math.min(0.05, (now - last) / 1000);
       last = now;
       const s = settingsRef.current;
-      step(bodiesRef.current, dt, s.bubbleSize / 2);
+      step(bodiesRef.current, dt, s.bubbleSize / 2, dragIdxRef.current);
       if (bubbleRef.current) drawBubbles(bubbleRef.current, s, bodiesRef.current);
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
+  }, []);
+
+  // Drag-to-move: click and hold a bubble to reposition it.
+  useEffect(() => {
+    const canvas = bubbleRef.current;
+    if (!canvas) return;
+
+    const onMouseDown = (e: MouseEvent) => {
+      if (e.button !== 0) return;
+      const { x, y } = clientToPoster(canvas, e.clientX, e.clientY);
+      const r = settingsRef.current.bubbleSize / 2;
+      const bodies = bodiesRef.current;
+      for (let i = 0; i < bodies.length; i++) {
+        if (Math.hypot(bodies[i].x - x, bodies[i].y - y) <= r) {
+          dragIdxRef.current = i;
+          dragVelRef.current = { vx: 0, vy: 0 };
+          dragLastRef.current = { x, y, t: performance.now() };
+          canvas.style.cursor = "grabbing";
+          e.preventDefault();
+          break;
+        }
+      }
+    };
+
+    const onMouseMove = (e: MouseEvent) => {
+      const { x, y } = clientToPoster(canvas, e.clientX, e.clientY);
+      if (dragIdxRef.current === -1) {
+        const r = settingsRef.current.bubbleSize / 2;
+        const hovering = bodiesRef.current.some(
+          (b) => Math.hypot(b.x - x, b.y - y) <= r
+        );
+        canvas.style.cursor = hovering ? "grab" : "default";
+        return;
+      }
+      const now = performance.now();
+      const dt = (now - dragLastRef.current.t) / 1000;
+      if (dt > 0) {
+        dragVelRef.current = {
+          vx: (x - dragLastRef.current.x) / dt,
+          vy: (y - dragLastRef.current.y) / dt,
+        };
+      }
+      dragLastRef.current = { x, y, t: now };
+      const body = bodiesRef.current[dragIdxRef.current];
+      if (body) {
+        const r = settingsRef.current.bubbleSize / 2;
+        body.x = Math.max(r, Math.min(POSTER_W - r, x));
+        body.y = Math.max(r, Math.min(POSTER_H - r, y));
+      }
+    };
+
+    const onMouseUp = () => {
+      if (dragIdxRef.current === -1) return;
+      const body = bodiesRef.current[dragIdxRef.current];
+      if (body) {
+        const { vx, vy } = dragVelRef.current;
+        const speed = settingsRef.current.bubbleSpeed;
+        const mag = Math.hypot(vx, vy);
+        if (mag > 0) {
+          body.vx = (vx / mag) * speed;
+          body.vy = (vy / mag) * speed;
+        } else {
+          const angle = Math.random() * Math.PI * 2;
+          body.vx = Math.cos(angle) * speed;
+          body.vy = Math.sin(angle) * speed;
+        }
+      }
+      dragIdxRef.current = -1;
+      canvas.style.cursor = "default";
+    };
+
+    canvas.addEventListener("mousedown", onMouseDown);
+    document.addEventListener("mousemove", onMouseMove);
+    document.addEventListener("mouseup", onMouseUp);
+    return () => {
+      canvas.removeEventListener("mousedown", onMouseDown);
+      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseup", onMouseUp);
+    };
   }, []);
 
   // Compose all three layers into a single PNG and download it.
