@@ -25,6 +25,7 @@ export const WORDS: Word[] = [
   w("Aivenings", 579, -32),
   w("Aivenings", -148, 197),
   w("Aivenings", -242, 431.6),
+  w("18:30", 716, 570, "open"),
   w("Aivenings", 383, 683, "open"),
   w("Aivenings", 126, 764.66),
   w("Aivenings", 471, 878),
