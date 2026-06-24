@@ -129,91 +129,93 @@ export default function App() {
       <Poster settings={s} exportRef={exportRef} />
 
       <aside className="panel">
-        <header className="panel-head">
-          <h1>AIvenings</h1>
-          <p>poster editor</p>
-        </header>
+        <div className="panel-scroll">
+          <header className="panel-head">
+            <h1>AIvenings</h1>
+            <p>poster editor</p>
+          </header>
 
-        <section className="group">
-          <div className="group-head">
-            <h2>Colour</h2>
-          </div>
-          <ColorStop
-            name="Color 1"
-            value={{ h: s.topHue, s: s.topSat, l: s.topLight }}
-            onChange={(v) => set({ topHue: v.h, topSat: v.s, topLight: v.l })}
-          />
-          <ColorStop
-            name="Color 2"
-            value={{ h: s.botHue, s: s.botSat, l: s.botLight }}
-            onChange={(v) => set({ botHue: v.h, botSat: v.s, botLight: v.l })}
-          />
-        </section>
+          <section className="group">
+            <div className="group-head">
+              <h2>Colour</h2>
+            </div>
+            <ColorStop
+              name="Color 1"
+              value={{ h: s.topHue, s: s.topSat, l: s.topLight }}
+              onChange={(v) => set({ topHue: v.h, topSat: v.s, topLight: v.l })}
+            />
+            <ColorStop
+              name="Color 2"
+              value={{ h: s.botHue, s: s.botSat, l: s.botLight }}
+              onChange={(v) => set({ botHue: v.h, botSat: v.s, botLight: v.l })}
+            />
+          </section>
 
-        <section className="group">
-          <div className="group-head">
-            <h2>Bubbles</h2>
-            <button
-              className="btn-text"
-              onClick={() =>
-                set({ bubbleSeed: Math.floor(Math.random() * 1e9) })
-              }
-            >
-              shuffle
-            </button>
-          </div>
-          <Slider
-            label="Count"
-            value={s.bubbleCount}
-            min={0}
-            max={MAX_BUBBLES}
-            onChange={(v) => set({ bubbleCount: v })}
-          />
-          <Slider
-            label="Size"
-            value={s.bubbleSize}
-            min={80}
-            max={700}
-            step={10}
-            unit="px"
-            onChange={(v) => set({ bubbleSize: v })}
-          />
-          <Slider
-            label="Speed"
-            value={s.bubbleSpeed}
-            min={0}
-            max={240}
-            step={5}
-            onChange={(v) => set({ bubbleSpeed: v })}
-          />
-          <p className="hint">They drift over the text and bounce off each other.</p>
-        </section>
+          <section className="group">
+            <div className="group-head">
+              <h2>Bubbles</h2>
+              <button
+                className="btn-text"
+                onClick={() =>
+                  set({ bubbleSeed: Math.floor(Math.random() * 1e9) })
+                }
+              >
+                shuffle
+              </button>
+            </div>
+            <Slider
+              label="Count"
+              value={s.bubbleCount}
+              min={0}
+              max={MAX_BUBBLES}
+              onChange={(v) => set({ bubbleCount: v })}
+            />
+            <Slider
+              label="Size"
+              value={s.bubbleSize}
+              min={80}
+              max={700}
+              step={10}
+              unit="px"
+              onChange={(v) => set({ bubbleSize: v })}
+            />
+            <Slider
+              label="Speed"
+              value={s.bubbleSpeed}
+              min={0}
+              max={240}
+              step={5}
+              onChange={(v) => set({ bubbleSpeed: v })}
+            />
+            <p className="hint">They drift over the text and bounce off each other.</p>
+          </section>
 
-        <section className="group">
-          <div className="group-head">
-            <h2>Pixelate</h2>
-          </div>
-          <Slider
-            label="Block size"
-            value={s.pixel}
-            min={1}
-            max={40}
-            unit="px"
-            onChange={(v) => set({ pixel: v })}
-          />
-          <p className="hint">
-            Affects gradient &amp; bubbles — text stays sharp.
-          </p>
-        </section>
+          <section className="group">
+            <div className="group-head">
+              <h2>Pixelate</h2>
+            </div>
+            <Slider
+              label="Block size"
+              value={s.pixel}
+              min={1}
+              max={40}
+              unit="px"
+              onChange={(v) => set({ pixel: v })}
+            />
+            <p className="hint">
+              Affects gradient &amp; bubbles — text stays sharp.
+            </p>
+          </section>
+        </div>
 
-        <div className="actions">
+        <footer className="actions">
           <button className="btn-tonal" onClick={() => setS(DEFAULTS)}>
             Reset
           </button>
           <button className="btn-filled" onClick={() => exportRef.current?.()}>
             Export PNG
           </button>
-        </div>
+        </footer>
       </aside>
     </div>
   );

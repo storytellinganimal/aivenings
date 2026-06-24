@@ -63,11 +63,18 @@
 .panel {
   background: var(--md-sys-color-surface-container);
   border-left: 1px solid var(--md-sys-color-outline);
-  padding: 20px 16px 20px;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 0;
+  overflow: hidden;
+}
+
+/* Scrollable region — all controls above the actions footer */
+.panel-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 16px 8px;
+  display: flex;
+  flex-direction: column;
   scrollbar-width: thin;
   scrollbar-color: var(--md-sys-color-outline-variant) transparent;
 }
@@ -349,14 +356,48 @@ input[type="range"]:active::-moz-range-thumb {
 .btn-filled:hover::before  { opacity: 0.08; }
 .btn-filled:active::before { opacity: 0.12; }
 
-/* ── Actions footer ────────────────────────────────────────────── */
+/* ── Actions footer — pinned below the scroll area ────────────── */
 
 .actions {
-  margin-top: auto;
-  padding-top: 20px;
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 8px;
+  padding: 12px 16px 20px;
+  border-top: 1px solid var(--md-sys-color-outline);
+  background: var(--md-sys-color-surface-container);
+}
+
+/* ── Responsive — mobile: poster above, controls below ────────── */
+
+@media (max-width: 767px) {
+  .app {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr min(340px, 45dvh);
+  }
+
+  .panel {
+    border-left: none;
+    border-top: 1px solid var(--md-sys-color-outline);
+  }
+
+  .panel-scroll {
+    padding: 12px 16px 8px;
+  }
+
+  /* Hide the branding header on mobile — the poster is visible above */
+  .panel-head {
+    display: none;
+  }
+
+  /* Groups need less top padding without the header above */
+  .panel-scroll > .group:first-of-type {
+    border-top: none;
+    padding-top: 4px;
+  }
+
+  .actions {
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
+  }
 }
 
 /* ── Reduced motion ────────────────────────────────────────────── */
