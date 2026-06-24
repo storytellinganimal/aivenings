@@ -8,6 +8,7 @@ export type Word = {
   top: number;
   /** "open" uses the outlined Terminal Grotesque variant. */
   variant: "regular" | "open";
+  opacity?: number;
 };
 
 // Words transcribed from Figma frame 9:143 ("Instagram post - 7").
@@ -24,18 +25,18 @@ export const WORDS: Word[] = [
   w("///////", 0, -42),
   w("Aivenings", 579, -32),
   w("Aivenings", -148, 197),
-  w("Aivenings", -242, 431.6),
+  w("Aivenings", -247, 309),
   w("18:30", 716, 570, "open"),
   w("Aivenings", 383, 683, "open"),
   w("Aivenings", 126, 764.66),
   w("Aivenings", 471, 878),
-  w("Hamburg", 196, 1115, "open"),
-  w("09.07.2026", -33, 1204),
-  w("Aivenings", 928, 329),
-  w("Aivenings", 928, 1084),
-  w("Aivenings", 928, 1206),
-  w("///////", 578, 201),
-  w("///////", -406, 1075),
+  w("Hamburg", 266, 1124, "open"),
+  w("09.07.2026", -10, 1204),
+  w("Aivenings", 941, 312),
+  { ...w("Aivenings", 928, 1084), opacity: 0 },
+  { ...w("Aivenings", 928, 1206), opacity: 0 },
+  w("///////", 559, 188),
+  w("///////", -334, 1088),
 ];
 
 export const FONT_SIZE = 180;

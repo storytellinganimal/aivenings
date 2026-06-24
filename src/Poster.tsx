@@ -468,7 +468,7 @@ export default function Poster({
             <p
               key={i}
               className={word.variant === "open" ? "word open" : "word"}
-              style={{ left: word.left, top: word.top }}
+              style={{ left: word.left, top: word.top, opacity: word.opacity }}
             >
               {word.text}
             </p>
