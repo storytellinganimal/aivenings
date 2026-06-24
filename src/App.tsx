@@ -234,7 +234,7 @@ export default function App() {
           <div className="credits">
             <p className="credits-cta">Want to join an Aivening?</p>
             <p className="credits-contact">
-              Drop me a line: lina(at)linamoreno.com
+              Drop me a line: aivenings(at)proton.me
             </p>
             <p className="credits-attr">
               Designed by{" "}
