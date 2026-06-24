@@ -138,6 +138,21 @@ export default function App() {
           <section className="group">
             <div className="group-head">
               <h2>Colour</h2>
+              <button
+                className="btn-text"
+                onClick={() =>
+                  set({
+                    topHue: Math.floor(Math.random() * 360),
+                    topSat: Math.floor(40 + Math.random() * 60),
+                    topLight: Math.floor(35 + Math.random() * 35),
+                    botHue: Math.floor(Math.random() * 360),
+                    botSat: Math.floor(40 + Math.random() * 60),
+                    botLight: Math.floor(35 + Math.random() * 35),
+                  })
+                }
+              >
+                shuffle
+              </button>
             </div>
             <ColorStop
               name="Color 1"
