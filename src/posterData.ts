@@ -29,7 +29,7 @@ export const WORDS: Word[] = [
   w("Aivenings", 126, 764.66),
   w("Aivenings", 471, 878),
   w("Hamburg", 196, 1115, "open"),
-  w("07.07.2026", -33, 1204),
+  w("09.07.2026", -33, 1204),
   w("Aivenings", 928, 329),
   w("Aivenings", 928, 1084),
   w("Aivenings", 928, 1206),
