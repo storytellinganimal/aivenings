@@ -4,10 +4,9 @@ import { hsl, MAX_BUBBLES } from "./posterData";
 import "./App.css";
 
 const DEFAULTS: PosterSettings = {
-  // top stop ≈ #b5b5b5 (neutral grey)
-  topHue: 0,
-  topSat: 0,
-  topLight: 71,
+  topHue: 262,
+  topSat: 100,
+  topLight: 15,
   // bottom stop ≈ #ff00dd (magenta) — also used by the bubbles
   botHue: 313,
   botSat: 100,
