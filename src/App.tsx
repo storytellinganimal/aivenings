@@ -249,6 +249,16 @@ export default function App() {
               </a>
               {" "}· Developed with Claude
             </p>
+            <p className="credits-attr">
+              Typeface by{" "}
+              <a
+                href="https://velvetyne.fr/fonts/terminal-grotesque/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Raphaël Bastide
+              </a>
+            </p>
           </div>
         </div>
 
